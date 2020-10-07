@@ -35,6 +35,9 @@ public:
 
 	Layer* gameLayer;
 
+	int currentLevel = 0;
+	int finalLevel = 2;
+
 	TTF_Font* font;
 
 	int const stateMoving = 1;

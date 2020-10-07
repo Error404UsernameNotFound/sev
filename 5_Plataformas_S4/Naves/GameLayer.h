@@ -49,6 +49,7 @@ public:
 	void loadMap(string name);
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
+	Tile* cup; // Elemento de final de nivel
 	Space* space;
 	float scrollx;
 };
