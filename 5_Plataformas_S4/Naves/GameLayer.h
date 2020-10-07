@@ -26,6 +26,7 @@ public:
 	void draw() override;
 
 	void keysToControls(SDL_Event event);
+	void mouseToControls(SDL_Event event); // USO DE MOUSE
 	int newEnemyTime = 0;
 
 	Player* player;

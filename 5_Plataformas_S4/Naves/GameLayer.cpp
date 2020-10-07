@@ -41,6 +41,7 @@ void GameLayer::processControls() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		keysToControls(event);
+		mouseToControls(event);
 	}
 
 	//procesar controles
@@ -371,6 +372,30 @@ void GameLayer::calculateScroll() {
 	if (player->x < mapWidth - WIDTH * 0.3) {
 		if (player->x - scrollx > WIDTH * 0.7) {
 			scrollx = player->x - WIDTH * 0.7;
+		}
+	}
+}
+
+void GameLayer::mouseToControls(SDL_Event event) {
+	// Modificación de coordenadas por posible escalado
+	float motionX = event.motion.x / game->scaleLower;
+	float motionY = event.motion.y / game->scaleLower;
+	// Cada vez que hacen click
+	if (event.type == SDL_MOUSEBUTTONDOWN) {
+		if (buttonShoot->containsPoint(motionX, motionY)) {
+			controlShoot = true;
+		}
+	}
+	// Cada vez que se mueve
+	if (event.type == SDL_MOUSEMOTION) {
+		if (buttonShoot->containsPoint(motionX, motionY) == false) {
+			controlShoot = false;
+		}
+	}
+	// Cada vez que levantan el click
+	if (event.type == SDL_MOUSEBUTTONUP) {
+		if (buttonShoot->containsPoint(motionX, motionY)) {
+			controlShoot = false;
 		}
 	}
 }
