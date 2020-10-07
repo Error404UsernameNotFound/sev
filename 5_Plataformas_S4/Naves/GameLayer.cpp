@@ -5,6 +5,8 @@ GameLayer::GameLayer(Game* game) : Layer(game) {
 }
 
 void GameLayer::init() {
+	pad = new Pad(WIDTH * 0.15, HEIGHT * 0.80, game);
+
 	buttonJump = new Actor("res/boton_salto.png", 
 		WIDTH * 0.9, HEIGHT * 0.55, 100, 100, game);
 	buttonShoot = new Actor("res/boton_disparo.png", 
@@ -292,6 +294,8 @@ void GameLayer::draw() {
 	buttonJump->draw(); // NO TIENEN SCROLL, POSICION FIJA
 	buttonShoot->draw(); // NO TIENEN SCROLL, POSICION FIJA
 
+	pad->draw(); // NO TIENEN SCROLL, POSICION FIJA
+
 	SDL_RenderPresent(game->renderer); //Renderiza
 }
 
@@ -382,6 +386,11 @@ void GameLayer::mouseToControls(SDL_Event event) {
 	float motionY = event.motion.y / game->scaleLower;
 	// Cada vez que hacen click
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
+		if (pad->containsPoint(motionX, motionY)) {
+			pad->clicked = true;
+			// CLICK TAMBIEN TE MUEVE
+			controlMoveX = pad->getOrientationX(motionX);
+		}
 		if (buttonShoot->containsPoint(motionX, motionY)) {
 			controlShoot = true;
 		}
@@ -391,6 +400,17 @@ void GameLayer::mouseToControls(SDL_Event event) {
 	}
 	// Cada vez que se mueve
 	if (event.type == SDL_MOUSEMOTION) {
+		if (pad->clicked && pad->containsPoint(motionX, motionY)) {
+			controlMoveX = pad->getOrientationX(motionX);
+			// Rango de -20 a 20 es igual que 0
+			if (controlMoveX > -20 && controlMoveX < 20) {
+				controlMoveX = 0;
+			}
+		}
+		else {
+			pad->clicked = false; // han sacado el ratón del pad
+			controlMoveX = 0;
+		}
 		if (buttonShoot->containsPoint(motionX, motionY) == false) {
 			controlShoot = false;
 		}
@@ -400,6 +420,11 @@ void GameLayer::mouseToControls(SDL_Event event) {
 	}
 	// Cada vez que levantan el click
 	if (event.type == SDL_MOUSEBUTTONUP) {
+		if (pad->containsPoint(motionX, motionY)) {
+			pad->clicked = false;
+			// LEVANTAR EL CLICK TAMBIEN TE PARA
+			controlMoveX = 0;
+		}
 		if (buttonShoot->containsPoint(motionX, motionY)) {
 			controlShoot = false;
 		}

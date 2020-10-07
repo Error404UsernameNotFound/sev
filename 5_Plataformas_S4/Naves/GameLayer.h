@@ -7,6 +7,8 @@
 #include "Projectile.h"
 #include "Tile.h"
 
+#include "Pad.h"
+
 #include "Text.h"
 
 #include "Audio.h"
@@ -51,6 +53,7 @@ public:
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
 	// Elementos de interfaz
+	Pad* pad;
 	Actor* buttonJump;
 	Actor* buttonShoot;
 	Tile* cup; // Elemento de final de nivel

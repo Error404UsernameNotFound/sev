@@ -69,6 +69,9 @@
     <ClCompile Include="Space.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pad.cpp">
+      <Filter>Source Files\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Space.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pad.h">
+      <Filter>Header Files\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
