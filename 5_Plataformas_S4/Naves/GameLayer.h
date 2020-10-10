@@ -29,6 +29,7 @@ public:
 
 	void keysToControls(SDL_Event event);
 	void mouseToControls(SDL_Event event); // USO DE MOUSE
+	void gamePadToControls(SDL_Event event); // USO DE GAMEPAD
 	int newEnemyTime = 0;
 
 	Player* player;
@@ -53,6 +54,7 @@ public:
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
 	// Elementos de interfaz
+	SDL_GameController* gamePad;
 	Pad* pad;
 	Actor* buttonJump;
 	Actor* buttonShoot;

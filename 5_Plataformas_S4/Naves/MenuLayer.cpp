@@ -34,9 +34,9 @@ void MenuLayer::processControls() {
 		}
 		// Cambio automático de input
 		// PONER el GamePad
-		//if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERAXISMOTION) {
-		//	game->input = game->inputGamePad;
-		//}
+		if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERAXISMOTION) {
+			game->input = game->inputGamePad;
+		}
 		if (event.type == SDL_KEYDOWN) {
 			game->input = game->inputKeyboard;
 		}
@@ -44,9 +44,9 @@ void MenuLayer::processControls() {
 			game->input = game->inputMouse;
 		}
 		// Procesar teclas
-		//if (game->input == game->inputGamePad) {  // gamePAD
-		//	gamePadToControls(event);
-		//}
+		if (game->input == game->inputGamePad) {  // gamePAD
+			gamePadToControls(event);
+		}
 		if (game->input == game->inputKeyboard) {
 			keysToControls(event);
 		}
@@ -91,5 +91,14 @@ void MenuLayer::mouseToControls(SDL_Event event) {
 		if (button->containsPoint(motionX, motionY)) {
 			controlContinue = true;
 		}
+	}
+}
+
+void MenuLayer::gamePadToControls(SDL_Event event) {
+	// Leer los botones
+	bool buttonA = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_A);
+
+	if (buttonA) {
+		controlContinue = true;
 	}
 }
