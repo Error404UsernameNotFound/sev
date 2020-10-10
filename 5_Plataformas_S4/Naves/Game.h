@@ -33,6 +33,8 @@ public:
 	SDL_Renderer* renderer; //Renderizador del juego
 	bool loopActive; //Juego activo
 
+	Layer* layer;
+	Layer* menuLayer;
 	Layer* gameLayer;
 
 	int currentLevel = 0;
