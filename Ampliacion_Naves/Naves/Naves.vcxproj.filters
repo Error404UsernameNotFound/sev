@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Actors">
       <UniqueIdentifier>{fccd8458-d1c2-4ca5-8821-4d407740cefe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Actors\Enemigos">
+      <UniqueIdentifier>{66b8e4b7-e857-40df-b82a-f89010046bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors\Enemigos">
+      <UniqueIdentifier>{a17373a2-6d3a-4029-ba9f-672a4e4c3ed4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -48,9 +54,6 @@
     <ClCompile Include="Background.cpp">
       <Filter>Source Files\Actors</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Actors</Filter>
-    </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\Actors</Filter>
     </ClCompile>
@@ -62,6 +65,15 @@
     </ClCompile>
     <ClCompile Include="Audio.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Actors\Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy2.cpp">
+      <Filter>Source Files\Actors\Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpaceship.cpp">
+      <Filter>Source Files\Actors\Enemigos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +95,6 @@
     <ClInclude Include="Background.h">
       <Filter>Header Files\Actors</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Actors</Filter>
-    </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\Actors</Filter>
     </ClInclude>
@@ -100,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="Audio.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Actors\Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpaceship.h">
+      <Filter>Header Files\Actors\Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy2.h">
+      <Filter>Header Files\Actors\Enemigos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

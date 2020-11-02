@@ -5,11 +5,7 @@
 
 class Enemy : public Actor{
 public:
-	Enemy(float x, float y, Game* game);
-	void draw() override;
-	void update();
-
-	Animation* aMoving;
-	Animation* animation;
+	Enemy(string filename, float x, float y, int width, int height, Game* game);
+	virtual void update();
 };
 

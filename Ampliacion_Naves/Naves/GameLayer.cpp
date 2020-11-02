@@ -21,8 +21,9 @@ void GameLayer::init() {
 	projectiles.clear(); //Para el reinicio del juego
 
 	enemies.clear(); //Para el reinicio del juego
-	enemies.push_back(new Enemy(300, 50, game));
-	enemies.push_back(new Enemy(300, 200, game));
+	/*enemies.push_back(new Enemy(300, 50, game));
+	enemies.push_back(new Enemy(300, 200, game));*/
+	//Cambio
 }
 
 void GameLayer::processControls() {
@@ -136,7 +137,13 @@ void GameLayer::update() {
 	if (newEnemyTime <= 0) {
 		int rX = (rand() % (600 - 500)) + 1 + 500;
 		int rY = (rand() % (300 - 60)) + 1 + 60;
-		enemies.push_back(new Enemy(rX, rY, game));
+		//enemies.push_back(new Enemy(rX, rY, game));
+		switch (rand() % 2) {
+		case 0:
+			enemies.push_back(new EnemySpaceship(rX, rY, game));
+		case 1:
+			enemies.push_back(new Enemy2(rX, rY, game));
+		}
 		newEnemyTime = 110;
 	}
 

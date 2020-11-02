@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "Background.h"
 #include "Enemy.h"
+#include "EnemySpaceship.h"
+#include "Enemy2.h"
 #include "Projectile.h"
 
 #include "Text.h"
