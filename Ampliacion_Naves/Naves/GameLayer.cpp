@@ -30,6 +30,7 @@ void GameLayer::init() {
 	//Cambio
 
 	coins.clear();
+	bombs.clear();
 }
 
 void GameLayer::processControls() {
@@ -207,6 +208,7 @@ void GameLayer::update() {
 	list<Enemy*> deleteEnemies;
 	list<Projectile*> deleteProjectiles;
 	list<Coin*> deleteCoins;
+	list<Bomb*> deleteBombs;
 
 	// Generar enemigos
 	newEnemyTime--;
@@ -216,6 +218,9 @@ void GameLayer::update() {
 
 		int rXCoin = (rand() % 500) + 1;
 		int rYCoin = (rand() % 400) + 1;
+
+		int rXBomb = (rand() % 500) + 1;
+		int rYBomb = (rand() % 400) + 1;
 		//enemies.push_back(new Enemy(rX, rY, game));
 		switch (rand() % 2) {
 		case 0:
@@ -228,6 +233,9 @@ void GameLayer::update() {
 
 		//Generacion de monedas
 		coins.push_back(new Coin(rXCoin, rYCoin, game));
+
+		//Generacion de bombas
+		bombs.push_back(new Bomb(rXBomb, rYBomb, game));
 
 		newEnemyTime = 110;
 	}
@@ -275,6 +283,16 @@ void GameLayer::update() {
 		}
 	}
 
+	for (auto const& bomb : bombs) {
+		if (player->isOverlap(bomb)) {
+			deleteBombs.push_back(bomb);
+
+			for (auto const& enemy : enemies) {
+				deleteEnemies.push_back(enemy);
+			}
+		}
+	}
+
 	//Player2
 	for (auto const& enemy : enemies) {
 		if (player2->isOverlap(enemy)) {
@@ -303,6 +321,16 @@ void GameLayer::update() {
 
 			points++;
 			textPoints->content = to_string(points);
+		}
+	}
+
+	for (auto const& bomb : bombs) {
+		if (player2->isOverlap(bomb)) {
+			deleteBombs.push_back(bomb);
+
+			for (auto const& enemy : enemies) {
+				deleteEnemies.push_back(enemy);
+			}
 		}
 	}
 
@@ -360,6 +388,11 @@ void GameLayer::update() {
 	}
 	deleteCoins.clear();
 
+	for (auto const& delBomb : deleteBombs) {
+		bombs.remove(delBomb);
+	}
+	deleteCoins.clear();
+
 	std::cout << "update gameLayer" << std::endl;
 }
 
@@ -379,6 +412,10 @@ void GameLayer::draw() {
 
 	for (auto const& coin : coins) {
 		coin->draw();
+	}
+
+	for (auto const& bomb : bombs) {
+		bomb->draw();
 	}
 
 	backgroundPoints->draw();

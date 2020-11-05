@@ -78,6 +78,9 @@
     <ClCompile Include="Coin.cpp">
       <Filter>Source Files\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Source Files\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files\Actors\Enemigos</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">
+      <Filter>Header Files\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
       <Filter>Header Files\Actors</Filter>
     </ClInclude>
   </ItemGroup>
