@@ -20,6 +20,7 @@ void GameLayer::init() {
 	space = new Space(1);
 	scrollx = 0;
 	tiles.clear();
+	destructibleTiles.clear();
 
 	audioBackground = new Audio("res/musica_ambiente.mp3", true);
 	audioBackground->play();
@@ -243,6 +244,10 @@ void GameLayer::update() {
 		item->update();
 	}
 
+	/*for (auto const& destructibleTile : destructibleTiles) {
+		destructibleTile->update();
+	}*/
+
 	//Colisiones
 	for (auto const& enemy : enemies) {
 		if (player->isOverlap(enemy)) {
@@ -261,6 +266,7 @@ void GameLayer::update() {
 	list<Enemy*> deleteEnemies;
 	list<Projectile*> deleteProjectiles;
 	list<Item*> deleteItems;
+	list<DestructibleTile*> deleteDestructibleTiles;
 
 	for (auto const& projectile : projectiles) {
 		if (!projectile->isInRender(scrollx) || projectile->vx == 0) {
@@ -326,6 +332,22 @@ void GameLayer::update() {
 		}
 	}
 
+	for (auto const& destructibleTile : destructibleTiles) {
+		if (destructibleTile->isOverlap(player)) {
+			destructibleTile->actualDuration++;
+
+			if (destructibleTile->maxDurationReached()) {
+				bool eInList = std::find(deleteDestructibleTiles.begin(),
+					deleteDestructibleTiles.end(),
+					destructibleTile) != deleteDestructibleTiles.end();
+
+				if (!eInList) {
+					deleteDestructibleTiles.push_back(destructibleTile);
+				}
+			}
+		}
+	}
+
 	for (auto const& delEnemy : deleteEnemies) {
 		enemies.remove(delEnemy);
 		space->removeDynamicActor(delEnemy);
@@ -345,6 +367,12 @@ void GameLayer::update() {
 	}
 	deleteItems.clear();
 
+	for (auto const& delDestructibleTile : deleteDestructibleTiles) {
+		destructibleTiles.remove(delDestructibleTile);
+		space->removeStaticActor(delDestructibleTile);
+	}
+	deleteItems.clear();
+
 	std::cout << "update gameLayer" << std::endl;
 }
 
@@ -357,6 +385,9 @@ void GameLayer::draw() {
 		tile->draw(scrollx);
 	}
 
+	for (auto const& destructibleTile : destructibleTiles) {
+		destructibleTile->draw(scrollx);
+	}
 	
 	for (auto const& projectile : projectiles) {
 		projectile->draw(scrollx);
@@ -458,6 +489,14 @@ void GameLayer::loadMapObject(char character, float x, float y) {
 		item->y = item->y - item->height / 2;
 		items.push_back(item);
 		space->addDynamicActor(item);
+		break;
+	}
+	case 'W': {
+		DestructibleTile* destructibleTile = new DestructibleTile("res/bloque_tierra.png", x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		destructibleTile->y = destructibleTile->y - destructibleTile->height / 2;
+		destructibleTiles.push_back(destructibleTile);
+		space->addStaticActor(destructibleTile);
 		break;
 	}
 	}

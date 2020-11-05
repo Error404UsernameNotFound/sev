@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Actors">
       <UniqueIdentifier>{fccd8458-d1c2-4ca5-8821-4d407740cefe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Actors\Tiles">
+      <UniqueIdentifier>{2f36c3c8-7db0-4bd0-86d7-abb4aaec6123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors\Tiles">
+      <UniqueIdentifier>{ee2e0b73-b9c6-4f92-84c1-c1f11ed00edf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,9 +69,6 @@
     <ClCompile Include="Audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Space.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Actors\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="DestructibleTile.cpp">
+      <Filter>Source Files\Actors\Tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +125,6 @@
     <ClInclude Include="Audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Space.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -130,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Header Files\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Actors\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DestructibleTile.h">
+      <Filter>Header Files\Actors\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

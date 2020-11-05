@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Projectile.h"
 #include "Tile.h"
+#include "DestructibleTile.h"
 #include "Item.h"
 
 #include "Pad.h"
@@ -55,6 +56,8 @@ public:
 	int itemQuantity; 
 
 	list<Tile*> tiles;
+	list<DestructibleTile*> destructibleTiles;
+
 	int mapWidth;
 	void loadMap(string name);
 	void loadMapObject(char character, float x, float y);
