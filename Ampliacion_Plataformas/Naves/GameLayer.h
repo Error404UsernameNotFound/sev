@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Projectile.h"
 #include "Tile.h"
+#include "Item.h"
 
 #include "Pad.h"
 
@@ -43,11 +44,15 @@ public:
 
 	list<Enemy*> enemies;
 	list<Projectile*> projectiles;
+	list<Item*> items;
 
 	Audio* audioBackground;
 
 	Text* textPoints;
 	int points; //Revisar
+
+	Text* textItems;
+	int itemQuantity; 
 
 	list<Tile*> tiles;
 	int mapWidth;

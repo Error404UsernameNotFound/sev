@@ -29,6 +29,10 @@ void GameLayer::init() {
 	textPoints = new Text("0", WIDTH * 0.92, HEIGHT * 0.04, game);
 	textPoints->content = to_string(points);
 
+	itemQuantity = 0;
+	textItems = new Text("Coleccionables: 0" , WIDTH * 0.72, HEIGHT * 0.10, game);
+	textItems->content = "Coleccionables: " + to_string(itemQuantity);
+
 	//player = new Player(50, 50, game);
 	background = new Background("res/fondo_2.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundPoints = new Actor("res/icono_puntos.png", 
@@ -36,6 +40,7 @@ void GameLayer::init() {
 
 	projectiles.clear(); //Para el reinicio del juego
 	enemies.clear(); //Para el reinicio del juego
+	items.clear();
 
 	loadMap("res/" + to_string(game->currentLevel) + ".txt");
 
@@ -234,6 +239,10 @@ void GameLayer::update() {
 		projectile->update();
 	}
 
+	for (auto const& item : items) {
+		item->update();
+	}
+
 	//Colisiones
 	for (auto const& enemy : enemies) {
 		if (player->isOverlap(enemy)) {
@@ -251,6 +260,7 @@ void GameLayer::update() {
 
 	list<Enemy*> deleteEnemies;
 	list<Projectile*> deleteProjectiles;
+	list<Item*> deleteItems;
 
 	for (auto const& projectile : projectiles) {
 		if (!projectile->isInRender(scrollx) || projectile->vx == 0) {
@@ -301,6 +311,21 @@ void GameLayer::update() {
 		}
 	}
 
+	for (auto const& item : items) {
+		if (item->isOverlap(player)) {
+			bool eInList = std::find(deleteItems.begin(),
+				deleteItems.end(),
+				item) != deleteItems.end();
+
+			if (!eInList) {
+				deleteItems.push_back(item);
+			}
+
+			itemQuantity++;
+			textItems->content = "Coleccionables: " + to_string(itemQuantity);
+		}
+	}
+
 	for (auto const& delEnemy : deleteEnemies) {
 		enemies.remove(delEnemy);
 		space->removeDynamicActor(delEnemy);
@@ -312,8 +337,13 @@ void GameLayer::update() {
 		space->removeDynamicActor(delProjectile);
 		delete delProjectile;
 	}
-
 	deleteProjectiles.clear();
+
+	for (auto const& delItem : deleteItems) {
+		items.remove(delItem);
+		space->removeDynamicActor(delItem);
+	}
+	deleteItems.clear();
 
 	std::cout << "update gameLayer" << std::endl;
 }
@@ -327,9 +357,7 @@ void GameLayer::draw() {
 		tile->draw(scrollx);
 	}
 
-	backgroundPoints->draw();
-	textPoints->draw();
-
+	
 	for (auto const& projectile : projectiles) {
 		projectile->draw(scrollx);
 	}
@@ -341,6 +369,14 @@ void GameLayer::draw() {
 	for (auto const& enemy : enemies) {
 		enemy->draw(scrollx);
 	}
+
+	for (auto const& item : items) {
+		item->draw(scrollx);
+	}
+
+	backgroundPoints->draw();
+	textPoints->draw();
+	textItems->draw();
 
 	// HUD
 	if (game->input == game->inputMouse) {
@@ -414,6 +450,14 @@ void GameLayer::loadMapObject(char character, float x, float y) {
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		space->addStaticActor(tile);
+		break;
+	}
+	case 'I': {
+		Item* item = new Item(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		item->y = item->y - item->height / 2;
+		items.push_back(item);
+		space->addDynamicActor(item);
 		break;
 	}
 	}
