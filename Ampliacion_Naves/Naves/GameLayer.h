@@ -41,5 +41,7 @@ public:
 
 	Text* textPoints;
 	int points; //Revisar
+
+	Text* textLives;
 };
 

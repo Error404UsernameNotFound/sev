@@ -18,5 +18,10 @@ public:
 
 	int shootCadence = 30;
 	int shootTime = 0;
+
+	int lifePoints;
+	bool hasLives();
+	void decrementLife();
+	int actualLifePoints();
 };
 

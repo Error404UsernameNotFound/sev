@@ -13,6 +13,8 @@ void GameLayer::init() {
 	textPoints = new Text("0", WIDTH * 0.92, HEIGHT * 0.04, game);
 	textPoints->content = to_string(points);
 
+	textLives = new Text("Vidas: 3", WIDTH * 0.62, HEIGHT * 0.04, game);
+
 	player = new Player(50, 50, game);
 	background = new Background("res/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundPoints = new Actor("res/icono_puntos.png", 
@@ -132,6 +134,9 @@ void GameLayer::keysToControls(SDL_Event event) {
 void GameLayer::update() {
 	background->update();
 
+	list<Enemy*> deleteEnemies;
+	list<Projectile*> deleteProjectiles;
+
 	// Generar enemigos
 	newEnemyTime--;
 	if (newEnemyTime <= 0) {
@@ -161,16 +166,26 @@ void GameLayer::update() {
 	//Colisiones
 	for (auto const& enemy : enemies) {
 		if (player->isOverlap(enemy)) {
-			init();
-			return; 
+			if (player->hasLives()) {
+				player->decrementLife();
+				textLives->content = "Vidas: " + to_string(player->actualLifePoints());
+
+				bool eInList = std::find(deleteEnemies.begin(),
+					deleteEnemies.end(),
+					enemy) != deleteEnemies.end();
+
+				if (!eInList) {
+					deleteEnemies.push_back(enemy);
+				}
+			}
+			else {
+				init();
+				return;
+			}
 		}
 	}
 
 	// Colisiones , Enemy - Projectile
-
-	list<Enemy*> deleteEnemies;
-	list<Projectile*> deleteProjectiles;
-
 	for (auto const& projectile : projectiles) {
 		if (!projectile->isInRender()) {
 			bool pInList = find(deleteProjectiles.begin(),
@@ -227,6 +242,7 @@ void GameLayer::draw() {
 
 	backgroundPoints->draw();
 	textPoints->draw();
+	textLives->draw();
 
 	for (auto const& projectile : projectiles) {
 		projectile->draw();

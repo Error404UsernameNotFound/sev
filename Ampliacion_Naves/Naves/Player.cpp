@@ -4,6 +4,8 @@ Player::Player(float x, float y, Game* game) :
 	Actor("res/jugador.png", x, y, 50, 57, game) {
 	audioShoot = new Audio("res/efecto_disparo.wav", false);
 
+	lifePoints = 3;
+
 	//TODO revisar 
 	//fileWidth = 50;
 }
@@ -35,4 +37,16 @@ Projectile* Player::shoot() {
 	else {
 		return NULL;
 	}
+}
+
+bool Player::hasLives() {
+	return lifePoints > 0;
+}
+
+void Player::decrementLife() {
+	lifePoints--;
+}
+
+int Player::actualLifePoints() {
+	return lifePoints;
 }
