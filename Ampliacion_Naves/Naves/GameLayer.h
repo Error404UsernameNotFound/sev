@@ -7,6 +7,7 @@
 #include "EnemySpaceship.h"
 #include "Enemy2.h"
 #include "Projectile.h"
+#include "Coin.h"
 
 #include "Text.h"
 
@@ -36,6 +37,7 @@ public:
 
 	list<Enemy*> enemies;
 	list<Projectile*> projectiles;
+	list<Coin*> coins;
 
 	Audio* audioBackground;
 

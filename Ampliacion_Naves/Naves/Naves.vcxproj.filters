@@ -75,6 +75,9 @@
     <ClCompile Include="EnemySpaceship.cpp">
       <Filter>Source Files\Actors\Enemigos</Filter>
     </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Enemy2.h">
       <Filter>Header Files\Actors\Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Header Files\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,8 @@ void GameLayer::init() {
 	/*enemies.push_back(new Enemy(300, 50, game));
 	enemies.push_back(new Enemy(300, 200, game));*/
 	//Cambio
+
+	coins.clear();
 }
 
 void GameLayer::processControls() {
@@ -136,19 +138,29 @@ void GameLayer::update() {
 
 	list<Enemy*> deleteEnemies;
 	list<Projectile*> deleteProjectiles;
+	list<Coin*> deleteCoins;
 
 	// Generar enemigos
 	newEnemyTime--;
 	if (newEnemyTime <= 0) {
 		int rX = (rand() % (600 - 500)) + 1 + 500;
 		int rY = (rand() % (300 - 60)) + 1 + 60;
+
+		int rXCoin = (rand() % 500) + 1;
+		int rYCoin = (rand() % 400) + 1;
 		//enemies.push_back(new Enemy(rX, rY, game));
 		switch (rand() % 2) {
 		case 0:
 			enemies.push_back(new EnemySpaceship(rX, rY, game));
+			break;
 		case 1:
 			enemies.push_back(new Enemy2(rX, rY, game));
+			break;
 		}
+
+		//Generacion de monedas
+		coins.push_back(new Coin(rXCoin, rYCoin, game));
+
 		newEnemyTime = 110;
 	}
 
@@ -182,6 +194,15 @@ void GameLayer::update() {
 				init();
 				return;
 			}
+		}
+	}
+
+	for (auto const& coin : coins) {
+		if (player->isOverlap(coin)) {
+			deleteCoins.push_back(coin);
+
+			points++;
+			textPoints->content = to_string(points);
 		}
 	}
 
@@ -234,15 +255,18 @@ void GameLayer::update() {
 
 	deleteProjectiles.clear();
 
+	for (auto const& delCoin : deleteCoins) {
+		coins.remove(delCoin);
+	}
+	deleteCoins.clear();
+
 	std::cout << "update gameLayer" << std::endl;
 }
 
 void GameLayer::draw() {
 	background->draw();
 
-	backgroundPoints->draw();
-	textPoints->draw();
-	textLives->draw();
+	
 
 	for (auto const& projectile : projectiles) {
 		projectile->draw();
@@ -253,6 +277,14 @@ void GameLayer::draw() {
 	for (auto const& enemy : enemies) {
 		enemy->draw();
 	}
+
+	for (auto const& coin : coins) {
+		coin->draw();
+	}
+
+	backgroundPoints->draw();
+	textPoints->draw();
+	textLives->draw();
 
 	SDL_RenderPresent(game->renderer); //Renderiza
 }
